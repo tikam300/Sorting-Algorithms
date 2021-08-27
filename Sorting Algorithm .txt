@@ -1,0 +1,102 @@
+// SORTING ALGORITHM
+
+void selectionSort(int A[],int n)
+{
+    for(int i=0;i< n-1;i++){
+        int imin = i;
+        for(int j=i+1;j < n;j++){
+            if(A[j]<A[imin])
+               imin = j;
+        }
+        int temp = A[i];
+        A[i]=A[imin];
+        A[imin]= temp;
+    }
+    return;
+}
+
+void BubbleSort(int A[],int n){
+    
+    for(int i=0;i< n-1;i++){
+       int flag = 0;
+        for(int j=0;j<n-i-1;j++){
+            if(A[j]>A[j+1]){
+                swap(A[j],A[j+1]);
+                flag = 1;
+            }
+        }
+        if(flag==0)break;
+    }
+}
+void Insertionsort(int A[],int n){
+    for(int i=0;i<n;i++){
+        int value = A[i];
+        int hole = i;
+        while(hole>0 && value<A[hole-1]){
+            A[hole]=A[hole-1];
+            hole = hole-1;
+            
+        }
+        A[hole]=value;
+    }
+}
+void merge(int *A,int *L,int nl,int *R,int nr){
+    int i=0,j=0,k=0;
+    while(i<nl && j<nr){
+        if(L[i]<R[j]){
+            A[k++]=L[i++];
+        }else{
+            A[k++]=R[j++];
+        }
+    }
+    while(i<nl){
+        A[k++]=L[i++];
+    }
+    while(j<nr){
+        A[k++]=R[j++];
+    }
+}
+void Mergesort(int *A,int n){
+    if(n<2)return;
+    int mid = n/2;
+    int *L = new int[mid*sizeof(int)]; 
+    int *R = new int[(n-mid)*sizeof(int)];
+    for(int i=0;i<mid;i++)
+        L[i]=A[i];
+    for(int j =mid;j<n;j++)
+        R[j-mid]=A[j];
+    Mergesort(L,mid);
+    Mergesort(R,n-mid);
+    merge(A,L,mid,R,n-mid);
+    delete []L;
+    delete []R;
+}
+int partition(int *A,int start,int end){
+    int pivot = A[end];
+    int pidx = start;
+    for(int i=start;i<end;i++){
+        if(A[i]<=pivot){
+            swap(A[i],A[pidx]);
+            pidx = pidx+1;
+        }
+    }
+    swap(A[pidx],A[end]);
+    return pidx;
+}
+void Quicksort(int *A,int start,int end){
+    if(start<end){
+        int pidx = partition(A,start,end);
+        Quicksort(A,start,pidx-1);
+        Quicksort(A,pidx+1,end);
+    }
+}
+int main()
+{
+    int A[] ={2,7,4,1,5,3};
+    int n = sizeof(A)/sizeof(A[0]);
+    BubbleSort(A,6);
+    for(int i = 0;i<n;i++)
+         cout<<A[i]<<" ";
+
+    return 0;
+}
