@@ -1,2 +1,2 @@
 # Sorting-Algorithms
-for sorting arrays.
+This Repository includes my codework of sorting.
